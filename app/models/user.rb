@@ -5,4 +5,6 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
+  
+  has_one :user_profile, class_name: "UserProfile"
 end
