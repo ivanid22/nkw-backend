@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_210154) do
+ActiveRecord::Schema.define(version: 2020_11_16_212658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_profile_id"
+    t.bigint "posting_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["posting_id"], name: "index_favorites_on_posting_id"
+    t.index ["user_profile_id"], name: "index_favorites_on_user_profile_id"
+  end
 
   create_table "postings", force: :cascade do |t|
     t.string "title"
@@ -24,6 +33,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_210154) do
     t.string "contact_phone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_profile_id"
+    t.index ["user_profile_id"], name: "index_postings_on_user_profile_id"
   end
 
   create_table "user_profiles", force: :cascade do |t|
@@ -60,5 +71,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_210154) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "favorites", "postings"
+  add_foreign_key "favorites", "user_profiles"
+  add_foreign_key "postings", "user_profiles"
   add_foreign_key "user_profiles", "users"
 end
