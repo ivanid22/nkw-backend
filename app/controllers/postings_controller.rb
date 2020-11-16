@@ -1,5 +1,14 @@
 class PostingsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_posting_belongs_to_current_user, only: [:update, :destroy]
+
+  def check_posting_belongs_to_current_user
+    @posting = Posting.find(params[:id])
+    unless @posting.user_profile_id == current_user.user_profile.id
+      @errors = ["Unauthorized to update Posting with id #{@posting.id}"]
+      render 'errors/show'
+    end
+  end
 
   def index
     @postings = Posting.all
@@ -36,8 +45,7 @@ class PostingsController < ApplicationController
     end
   end
   
-
   def posting_params
-    params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price)
+    params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price, :user_profile_id)
   end
 end
