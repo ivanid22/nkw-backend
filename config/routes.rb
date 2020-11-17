@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   scope '/v1' do
     resources :postings
     resources :user_profiles
+    resources :favorites, except: [:update]
   end
 end
