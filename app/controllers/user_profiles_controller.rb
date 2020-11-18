@@ -42,7 +42,15 @@ class UserProfilesController < ApplicationController
     end
   end
 
+  def upload_picture
+    @user_profile = current_user.user_profile
+    if @user_profile
+      @user_profile.avatar.attach(params[:avatar])
+      render json: { 'status': 'success', 'avatar_url': url_for(@user_profile.avatar) }.to_json
+    end
+  end
+
   def user_profile_params
-    params.require(:user_profile).permit(:name, :location)
+    params.require(:user_profile).permit(:name, :location, :avatar)
   end
 end
