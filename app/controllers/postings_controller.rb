@@ -4,6 +4,7 @@ class PostingsController < ApplicationController
 
   def check_posting_belongs_to_current_user
     @posting = Posting.find(params[:id])
+    puts "Posting user id: #{@posting.user_profile_id}, Current user id: #{current_user.user_profile.id}"
     unless @posting.user_profile_id == current_user.user_profile.id
       @errors = ["Unauthorized to update Posting with id #{@posting.id}"]
       render 'errors/show'
@@ -27,6 +28,7 @@ class PostingsController < ApplicationController
 
   def create
     @posting = Posting.new(posting_params)
+    @posting.user_profile = current_user.user_profile
     if @posting.save
       render 'show'
     else
@@ -46,6 +48,6 @@ class PostingsController < ApplicationController
   end
   
   def posting_params
-    params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price, :user_profile_id)
+    params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price)
   end
 end
