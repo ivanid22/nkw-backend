@@ -8,4 +8,9 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def heartbeat
+    # Used to signal the app to wake up
+    render json: { 'awake' => true }.to_json
+  end
+
 end
