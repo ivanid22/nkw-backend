@@ -1,6 +1,6 @@
 class PostingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_posting_belongs_to_current_user, only: [:update, :destroy]
+  before_action :check_posting_belongs_to_current_user, only: [:update, :destroy, :upload_picture]
 
   def check_posting_belongs_to_current_user
     @posting = Posting.find(params[:id])
@@ -46,8 +46,17 @@ class PostingsController < ApplicationController
       render 'errors/show'
     end
   end
+
+  def upload_picture
+    @posting = Posting.find(params[:id])
+    if @posting
+      @posting.picture.attach(params[:picture])
+      render json: { 'result' => 'success', 'picture': url_for(@posting.picture) }.to_json
+    end
+  end
   
   def posting_params
-    params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price)
+    puts params
+    params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price, :picture)
   end
 end

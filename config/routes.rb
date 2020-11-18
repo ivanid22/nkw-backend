@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     resources :postings
     resources :user_profiles
     resources :favorites, except: [:update]
+    post 'postings/:id/picture', to: "postings#upload_picture"
   end
 end
