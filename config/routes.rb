@@ -14,11 +14,11 @@ Rails.application.routes.draw do
   get 'heartbeat', to: 'application#heartbeat'
 
   scope '/v1' do
+    get 'user_profiles/current', to: "user_profiles#current_user_profile"
     resources :postings
     resources :user_profiles
     resources :favorites, except: [:update]
     post 'postings/:id/picture', to: "postings#upload_picture"
     post 'user_profiles/picture', to: "user_profiles#upload_picture"
-    get 'user_profiles/current' to: "user_profiles#current_user_profile"
   end
 end

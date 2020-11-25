@@ -51,7 +51,10 @@ class UserProfilesController < ApplicationController
   end
 
   def current_user_profile
-    @user_pro
+    @user_profile = current_user.user_profile
+    puts "current user: #{current_user}"
+    render "show"
+  end
 
   def user_profile_params
     params.require(:user_profile).permit(:name, :location, :avatar)
