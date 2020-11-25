@@ -50,6 +50,9 @@ class UserProfilesController < ApplicationController
     end
   end
 
+  def current_user_profile
+    @user_pro
+
   def user_profile_params
     params.require(:user_profile).permit(:name, :location, :avatar)
   end

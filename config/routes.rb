@@ -19,5 +19,6 @@ Rails.application.routes.draw do
     resources :favorites, except: [:update]
     post 'postings/:id/picture', to: "postings#upload_picture"
     post 'user_profiles/picture', to: "user_profiles#upload_picture"
+    get 'user_profiles/current' to: "user_profiles#current_user_profile"
   end
 end

@@ -12,7 +12,7 @@ class PostingsController < ApplicationController
   end
 
   def index
-    @postings = Posting.all
+    @postings = Posting.includes(:favorites).all
     render 'index'
   end
 
