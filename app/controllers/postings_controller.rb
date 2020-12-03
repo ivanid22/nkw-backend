@@ -8,7 +8,6 @@ class PostingsController < ApplicationController
 
     @errors = ["Unauthorized to update Posting with id #{@posting.id}"]
     render 'errors/show'
-    end
   end
 
   def index
