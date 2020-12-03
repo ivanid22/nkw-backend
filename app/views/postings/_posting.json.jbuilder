@@ -5,7 +5,7 @@ json.price posting.price
 if posting.picture.attached?
   json.picture url_for(posting.picture) if posting.picture.attached?
 else
-  json.picture ""
+  json.picture ''
 end
 json.user_profile_id posting.user_profile_id
 json.contact_email posting.contact_email if posting.contact_email.present?

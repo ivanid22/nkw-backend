@@ -4,7 +4,7 @@ class UserProfilesController < ApplicationController
 
   def index
     @user_profiles = UserProfile.all
-    render "index"
+    render 'index'
   end
 
   def show
@@ -15,45 +15,45 @@ class UserProfilesController < ApplicationController
   def update
     @user_profile = UserProfile.find(params[:id])
     if @user_profile.update(user_profile_params)
-      render "show"
+      render 'show'
     else
       @errors = @user_profile.errors.messages
-      render "errors/show"
+      render 'errors/show'
     end
   end
 
   def create
     @user_profile = UserProfile.new(user_profile_params)
     if @user_profile.save
-      render "show"
+      render 'show'
     else
       @errors = @user_profile.errors.messages
-      render "errors/show"
+      render 'errors/show'
     end
   end
 
   def destroy
     @user_profile = UserProfile.find(params[:id])
     if @user_profile.destroy
-      render "user_profiles/delete"
+      render 'user_profiles/delete'
     else
       @errors = @user_profile.errors.messages
-      render "errors/show"
+      render 'errors/show'
     end
   end
 
   def upload_picture
     @user_profile = current_user.user_profile
-    if @user_profile
-      @user_profile.avatar.attach(params[:avatar])
-      render json: { 'status': 'success', 'avatar_url': url_for(@user_profile.avatar) }.to_json
-    end
+    return unless @user_profile
+
+    @user_profile.avatar.attach(params[:avatar])
+    render json: { 'status': 'success', 'avatar_url': url_for(@user_profile.avatar) }.to_json
   end
 
   def current_user_profile
     @user_profile = current_user.user_profile
     puts "current user: #{current_user}"
-    render "show"
+    render 'show'
   end
 
   def user_profile_params

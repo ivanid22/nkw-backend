@@ -1,13 +1,13 @@
 class PostingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_posting_belongs_to_current_user, only: [:update, :destroy, :upload_picture]
+  before_action :check_posting_belongs_to_current_user, only: %i[update destroy upload_picture]
 
   def check_posting_belongs_to_current_user
     @posting = Posting.find(params[:id])
-    puts "Posting user id: #{@posting.user_profile_id}, Current user id: #{current_user.user_profile.id}"
-    unless @posting.user_profile_id == current_user.user_profile.id
-      @errors = ["Unauthorized to update Posting with id #{@posting.id}"]
-      render 'errors/show'
+    return if @posting.user_profile_id == current_user.user_profile.id
+
+    @errors = ["Unauthorized to update Posting with id #{@posting.id}"]
+    render 'errors/show'
     end
   end
 
@@ -54,7 +54,7 @@ class PostingsController < ApplicationController
       render json: { 'result' => 'success', 'picture': url_for(@posting.picture) }.to_json
     end
   end
-  
+
   def posting_params
     puts params
     params.require(:posting).permit(:title, :description, :contact_email, :contact_phone, :price, :picture)

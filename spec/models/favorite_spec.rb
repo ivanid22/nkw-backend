@@ -32,7 +32,7 @@ RSpec.describe Favorite, type: :model do
     end
   end
 
-  describe "favorites_by" do
+  describe 'favorites_by' do
     it 'should return all the favorites by a specific user profile' do
       Favorite.create(user_profile: UserProfile.first, posting: Posting.first)
       Favorite.create(user_profile: UserProfile.first, posting: Posting.last)
@@ -40,13 +40,11 @@ RSpec.describe Favorite, type: :model do
     end
   end
 
-  describe "favorites_for" do
+  describe 'favorites_for' do
     it 'should return all the favorites for a specific posting' do
       Favorite.create(user_profile: UserProfile.first, posting: Posting.first)
       Favorite.create(user_profile: UserProfile.last, posting: Posting.first)
       expect(Favorite.favorites_for(Posting.first.id).count).to eql(2)
     end
   end
-  
-  
 end

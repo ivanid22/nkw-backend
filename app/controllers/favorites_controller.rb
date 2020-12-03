@@ -1,5 +1,5 @@
 class FavoritesController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :index, :destroy]
+  before_action :authenticate_user!, only: %i[create index destroy]
 
   def create
     @user_profile = current_user.user_profile
@@ -30,7 +30,6 @@ class FavoritesController < ApplicationController
       render 'errors/show'
     end
   end
-  
 
   def show
     @favorite = Favorite.find(params[:id])
