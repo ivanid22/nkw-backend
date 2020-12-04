@@ -47,11 +47,10 @@ class PostingsController < ApplicationController
   end
 
   def upload_picture
-    @posting = Posting.find(params[:id])
-    if @posting
-      @posting.picture.attach(params[:picture])
-      render json: { 'result' => 'success', 'picture': url_for(@posting.picture) }.to_json
-    end
+    return unless @posting
+
+    @posting.picture.attach(params[:picture])
+    render json: { 'result' => 'success', 'picture': url_for(@posting.picture) }.to_json
   end
 
   def posting_params
