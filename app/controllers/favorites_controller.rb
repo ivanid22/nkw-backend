@@ -3,7 +3,7 @@ class FavoritesController < ApplicationController
 
   def create
     @user_profile = current_user.user_profile
-    @posting = Posting.find(params[:posting_id])
+    @posting = Favorite.find_posting(params[:posting_id])
     if !Favorite.exists?(@user_profile, @posting)
       @favorite = Favorite.create(user_profile: @user_profile, posting: @posting)
       render 'show'

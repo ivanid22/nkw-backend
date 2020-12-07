@@ -13,4 +13,8 @@ class Favorite < ApplicationRecord
   def self.favorites_for(posting_id)
     where(posting_id: posting_id)
   end
+
+  def self.find_posting(posting_id)
+    Posting.find(posting_id)
+  end
 end
